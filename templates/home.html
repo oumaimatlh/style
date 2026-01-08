@@ -13,20 +13,29 @@
             </h1>
             <form action="/ascii-art" method="POST">
 
-                <textarea  name="content" placeholder="Tapez..." >{{.text}}</textarea>
+                <textarea  name="content" placeholder="Write A Text ..." >{{.text}}</textarea>
                 <br><br>
 
                 
-                <br><br>
 
-                <div class="buttons">
-                      <label>Standard</label><input type="radio" name="types" value="standard" {{if eq .font "standard" }} checked {{end}}/>
-                      <label>Shadow</label><input type="radio" name="types" value="shadow" {{if eq .font "shadow" }} checked {{end}}/>
-                      <label>Thinkertoy</label><input type="radio" name="types" value="thinkertoy" {{if eq .font "thinkertoy" }} checked {{end}}/>
-                </div>
+                    <div class="ART-container">
+                        <div class="ART">
+                            <label>Standard</label>
+                            <input type="radio" name="types" value="standard" {{if eq .font "standard" }} checked {{end}}/>
+                        </div>
+                        <div class="ART">
+                            <label>Shadow</label>
+                            <input type="radio" name="types" value="shadow" {{if eq .font "shadow" }} checked {{end}}/>
+                        </div>
+                        <div class="ART">
+                            <label>Thinkertoy</label>
+                            <input type="radio" name="types" value="thinkertoy" {{if eq .font "thinkertoy" }} checked {{end}}/>
+                        </div>
+                    </div>
+
 
                 <br><br>
-                <input type="submit" value="Afficher" />
+                <input type="submit" value="DISPLAY" />
             </form>
 
             <br><br>

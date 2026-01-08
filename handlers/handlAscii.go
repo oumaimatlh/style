@@ -19,25 +19,25 @@ func AsciiController(w http.ResponseWriter, r *http.Request) {
 
 	if inputText == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		errorMsg = "Vous devez taper quelque chose..."
+		errorMsg = "You need to write something..."
 	} else {
 		for _, r := range inputText {
 			if !(r >= 32 && r <= 126 || r == 13 || r == 10) {
 				w.WriteHeader(http.StatusBadRequest)
-				errorMsg = "Input non validée : les caractères doivent être en ASCII 32-126"
+				errorMsg = "Input not validated: characters must be in ASCII 32-126"
 				break
 			}
 		}
 	}
 	if len(inputText) >= 3000 {
 		w.WriteHeader(http.StatusBadRequest)
-		errorMsg = "Votre Text a dépassée 3000 caractéres"
+		errorMsg = "Your text has exceeded 3000 characters."
 	}
 
 	font := r.PostForm.Get("types")
 	if errorMsg == "" && font == "" {
 		w.WriteHeader(http.StatusBadRequest)
-		errorMsg = "Vous devez choisir un Art"
+		errorMsg = "You must choose an Art"
 	}
 
 	var result string
