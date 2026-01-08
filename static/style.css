@@ -1,0 +1,131 @@
+body {
+    width : 100%;
+    height : 100vh;
+    margin: 0;
+    background-image:url(1);
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-repeat: no-repeat;
+    backdrop-filter: blur(2px);
+}
+@font-face {
+    font-family: 'NewFont';       /* le nom que tu vas utiliser */
+    src: url('./Antithesis.otf'); /* chemin vers ton fichier */
+}
+@font-face {
+    font-family: 'NewFont2';       /* le nom que tu vas utiliser */
+    src: url('./Riglos.ttf'); /* chemin vers ton fichier */
+}
+/*
+    Le container et non ses enfant  ; va etre centree ds la page de 25% gauche , droite a travers
+    du marign : 0 auto  ,  maiss juste horizontale  donc il calcule la marge left right
+    automatiquement d'apre le body qui a width , qui va calculer l'espace restant
+    margin global= widthBody - widthContainer = 100% - 50% = 50%
+        margin left => 25%
+        margin right => 25%
+*/
+
+.container{
+    width: 70%;
+    height: max-content;
+    margin: 5% auto;
+    background: rgba(255, 254, 253, 0.212) !important;
+    box-shadow: 0 6px 25px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+    backdrop-filter: blur(2px);
+    border-radius: 25px;
+
+    /*
+        Maintenant ce container je le transforme  flex box  a partir display : flex
+            RQ : Flexbox n’agit JAMAIS directement sur le parent, mais sur la disposition des enfants
+    */
+    display:flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    /*align-items: center ;*/
+    gap: 20px;
+
+}
+h1, label {
+    font-family:"NewFont";
+    text-align: center;
+    font-size: 55px;
+    font-weight:700px;
+    font-style: oblique;
+    letter-spacing: 7px ;
+    word-spacing: 9px;
+    background: linear-gradient(45deg, #004c8a, #0b3252e7);
+    -webkit-background-clip: text;    font-size: 55px;
+
+    -webkit-text-fill-color: transparent;    
+}
+
+textarea {
+    display: block;
+    width:90%;
+    height: 100px;
+
+    margin:0 auto;
+    /*Je met le text area in block car est un element inline block , pourtant le margin 0 auto 
+    centree les chose ds le cas d'un item est un element de type block */
+    min-height: 50px;
+    max-height: 200px;
+    resize: vertical;   /* permet à l’utilisateur de redimensionner manuellement */
+    overflow-y: auto ; 
+    border: transparent;
+    border-radius: 10px;
+    background-color: #cfcfcf1c;
+    box-shadow: 0 3px 25px rgba(0, 0, 0, 0.11);
+    backdrop-filter: blur(4px);
+   
+    display: 2px;
+}
+
+textarea::placeholder{
+}
+
+textarea:focus {
+    outline: none;  /* supprime le contour par défaut */
+    box-shadow: 0 0 5px rgba(26, 58, 73, 0.87); /* ajout d’un effet focus */
+}
+
+label {
+    font-size: 20px;
+    letter-spacing: 1px ;
+
+}
+
+.buttons{
+    display:flex;
+    justify-content: center;
+    gap: 10px;
+}
+input[type="radio"] {
+  width: 30px;
+  height: 30pxpx;
+  accent-color: #f8a1ca; /* couleur du cercle et du point */
+}
+
+input[type="submit"] {
+  display: block;
+  margin: 0 auto;
+  width: 50%;
+  background-color: #042942;
+  border: none;
+  font-family: "NewFont";
+  color: white;
+  font-weight: bold;
+  border-radius: 10px;
+  height: 35px;
+}
+.result {
+
+    overflow: auto;
+    margin :0 auto;
+}
+pre {
+    background: linear-gradient(45deg, #0a3e4b, #f80088);
+    -webkit-background-clip: text;   
+    -webkit-text-fill-color: transparent;    
+}yes
