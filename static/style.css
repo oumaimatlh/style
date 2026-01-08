@@ -78,7 +78,6 @@ textarea {
     background-color: #cfcfcf1c;
     box-shadow: 0 3px 25px rgba(0, 0, 0, 0.11);
     backdrop-filter: blur(4px);
-   
     display: 2px;
 }
 
@@ -120,12 +119,18 @@ input[type="submit"] {
   height: 35px;
 }
 .result {
-
+    width: 100%;
+    
+    min-height: 50px;
+    max-height: 300px;
+    margin: 0 auto;
     overflow: auto;
-    margin :0 auto;
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: center;
 }
 pre {
     background: linear-gradient(45deg, #0a3e4b, #f80088);
     -webkit-background-clip: text;   
     -webkit-text-fill-color: transparent;    
-}yes
+}
