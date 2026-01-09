@@ -6,20 +6,20 @@ import (
 )
 
 func Home(w http.ResponseWriter, r *http.Request) {
+
 	if r.URL.Path != "/" {
-		http.Error(w, "404", http.StatusNotFound)
+		HandleError(w, http.StatusNotFound, "404")
 		return
 	}
 
 	if r.Method != http.MethodGet {
-
-		http.Error(w, "405", http.StatusMethodNotAllowed)
+		HandleError(w, http.StatusMethodNotAllowed, "405")
 		return
 	}
 
-	template, err := template.ParseFiles("./templates/home.html")
+	tmpl, err := template.ParseFiles("./templates/home.html")
 	if err != nil {
-		http.Error(w, "Erreur lors du chargement du template", http.StatusInternalServerError)
+		HandleError(w, http.StatusInternalServerError, "500")
 		return
 	}
 
@@ -28,9 +28,5 @@ func Home(w http.ResponseWriter, r *http.Request) {
 		"font": "standard",
 	}
 
-	er := template.Execute(w, data)
-	if er != nil {
-		http.Error(w, "Erreur lors de l'affichage du template", http.StatusInternalServerError)
-		return
-	}
+	tmpl.Execute(w, data)
 }

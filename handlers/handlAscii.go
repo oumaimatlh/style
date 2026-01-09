@@ -7,69 +7,74 @@ import (
 )
 
 func AsciiController(w http.ResponseWriter, r *http.Request) {
-	var errorMsg string
 
 	if r.Method != http.MethodPost {
-		http.Error(w, "405: Bad Method", http.StatusMethodNotAllowed)
+		HandleError(w, http.StatusMethodNotAllowed, "405")
 		return
 	}
 
-	r.ParseForm()
+	if err := r.ParseForm(); err != nil {
+		HandleError(w, http.StatusBadRequest, "400")
+		return
+	}
+
 	inputText := r.PostForm.Get("content")
+	font := r.PostForm.Get("types")
+
+	var errorMsg string
+	var result string
 
 	if inputText == "" {
-		w.WriteHeader(http.StatusBadRequest)
 		errorMsg = "You need to write something..."
+	} else if len(inputText) >= 3000 {
+		errorMsg = "Your text has exceeded 3000 characters."
 	} else {
-		for _, r := range inputText {
-			if !(r >= 32 && r <= 126 || r == 13 || r == 10) {
-				w.WriteHeader(http.StatusBadRequest)
+		for _, ch := range inputText {
+			if !(ch >= 32 && ch <= 126 || ch == '\n' || ch == '\r') {
 				errorMsg = "Input not validated: characters must be in ASCII 32-126"
 				break
 			}
 		}
 	}
-	if len(inputText) >= 3000 {
-		w.WriteHeader(http.StatusBadRequest)
-		errorMsg = "Your text has exceeded 3000 characters."
-	}
 
-	font := r.PostForm.Get("types")
+	// VALIDATION FONT
 	if errorMsg == "" && font == "" {
-		w.WriteHeader(http.StatusBadRequest)
 		errorMsg = "You must choose an Art"
 	}
 
-	var result string
+	// APPLICATION FONT
 	if errorMsg == "" {
 		var err error
 		result, err = ApplyingFont(inputText, font)
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			HandleError(w, http.StatusInternalServerError, err.Error())
 			return
 		}
 	}
-	// handle new line at the beginning
+
+	// GESTION DES NOUVELLES LIGNES
 	if strings.HasPrefix(result, "\n") {
 		result = "\n" + result
 		inputText = "\n" + inputText
 	}
 
+	// SI ERREUR → on réaffiche HOME
 	data := map[string]string{
-		"font":   font,
 		"text":   inputText,
+		"font":   font,
 		"result": result,
 		"error":  errorMsg,
 	}
 
-	template, e := template.ParseFiles("./templates/home.html")
-	if e != nil {
-		http.Error(w, "404", http.StatusNotFound)
-		return
-	}
-	err := template.Execute(w, data)
+	tmpl, err := template.ParseFiles("./templates/home.html")
 	if err != nil {
-		http.Error(w, "500", http.StatusInternalServerError)
+		HandleError(w, http.StatusInternalServerError, "500")
 		return
 	}
+
+	if errorMsg != "" {
+		w.WriteHeader(http.StatusBadRequest)
+	}
+
+	tmpl.Execute(w, data)
 }
